@@ -1,9 +1,48 @@
-.App {
-  width:100vw;
+.welcome-container{
+  z-index: 9998;
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100vw;
   height: 100vh;
-  background-color: var(--main-clr);
+  flex-wrap: wrap;
 
-  h1 {
-    position: absolute;
+  .right {
+    color: var(--main-clr);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+      font-family: "Source Code Pro", monospace;
+      font-optical-sizing: auto;
+      font-weight: 200;
+      font-style: normal;
+    }
+
+    .card-container {
+      background-color: var(--color-bg2);
+      width: fit-content;
+      height: fit-content;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-direction: column;
+      margin: 7rem;
+      padding: 1rem;
+      border-radius: 15px;
+      text-align: center;
+
+      img {
+        width: 100%;
+        // height: 200px;
+        border-radius: 100%;
+      }
+
+      
+    }
   }
 }

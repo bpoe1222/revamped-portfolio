@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.scss';
+import myImage from './images/pfp.jpg'
 
 function App() {
   return (
@@ -13,7 +14,17 @@ function App() {
         <div className='g5'></div>
       </div>
     </div>
-    <div className='super-big'>test</div>
+    <div className='welcome-container'>
+      <div className='right'>
+        <div className='card-container'>
+          <h1>Hello World!</h1>
+          {/* <img src={myImage}></img> */}
+          <p>I'm Bailey Poe, a Quality Assurance Analyst at HP with a passion for front-end development.</p>
+          <p>Explore my tech journey below!</p>
+          <a href='/resume'>My journey</a>
+        </div>
+      </div>
+    </div>
     </div>
     
   );
