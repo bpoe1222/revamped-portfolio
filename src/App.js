@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.scss';
-import myImage from './images/pfp.jpg'
 
 function App() {
   return (
