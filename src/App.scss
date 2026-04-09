@@ -1,4 +1,4 @@
-.welcome-container{
+.welcome-container {
   z-index: 9998;
   position: fixed;
   top: 0;
@@ -23,18 +23,20 @@
       font-style: normal;
     }
 
-    .card-container {
-      background-color: var(--color-bg2);
-      width: fit-content;
-      height: fit-content;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      flex-direction: column;
-      margin: 7rem;
-      padding: 1rem;
-      border-radius: 15px;
-      text-align: center;
+    // .card-container {
+    //   background-color: var(--surface-1);
+    //   border: transparent 1px solid;
+    //   border-radius: 15px;
+    //   max-inline-size: 500px;
+    //   margin-inline: auto;
+    //   padding: 21px;
+    //   gap: 1lh;
+    //   background:
+    //   radial-gradient(circle at 50% 300%, var(--primary-500), var(--surface-1)) padding-box,
+    //   linear-gradient(var(--border-1), var(--border-2)) border-box;
+
+
+
 
       img {
         width: 100%;
@@ -42,7 +44,6 @@
         border-radius: 100%;
       }
 
-      
+
     }
   }
-}

@@ -14,9 +14,17 @@
   --color3: 100, 220, 255;
   --color4: 200, 50, 50;
   --color5: 180, 180, 50;
-  --color-interactive: 140, 100, 255;
+  --color-interactive: rgb(140, 100, 255);
   --circle-size: 80%;
   --blending: hard-light;
+  --primary-900: hsl(256, 43%, 7%);
+  --surface-1: var(--primary-900);
+  --surface-3: var(--primary-700);
+  --primary-700: hsl(243, 26%, 15%);
+  --primary-600: hsl(252, 9%, 22%);
+  --primary-500: hsl(259, 13%, 28%);
+  --border-1: var(--primary-500); /* top */
+  --border-2: var(--primary-600); /* bottom */
 }
 
 ::-webkit-scrollbar {
@@ -223,8 +231,30 @@ a {
   transition: background-size 400ms;
   color: var(--main-clr);
   text-decoration: none;
+  cursor: pointer;
 
   &:hover, &:focus {
     background-size: 0 0.1em, 100% 0.1em;
   }
 }
+
+    .card-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 15px;
+      padding: 21px;
+
+      position: relative;
+      background: hsl(from var(--main-clr) h s l / 0.05);
+      backdrop-filter: blur(75px);
+
+      &::before {
+        position: absolute;
+        content: "";
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+      }
+    }
