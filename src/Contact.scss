@@ -1,0 +1,30 @@
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: var(--color-text);
+}
+
+    .card-container-contact {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 15px;
+      padding: 21px;
+      color: var(--main-clr);
+
+      position: relative;
+      background: hsl(from var(--main-clr) h s l / 0.15);
+      backdrop-filter: blur(1000px);
+
+      &::before {
+        position: absolute;
+        content: "";
+        inset: 0;
+        z-index: -1;
+        border-radius: inherit;
+      }
+    }
