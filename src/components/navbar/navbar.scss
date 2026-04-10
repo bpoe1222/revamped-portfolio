@@ -1,39 +1,42 @@
 .nav-container {
-    position: absolute;
-    top: 0;
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  transition: background 400ms, backdrop-filter 400ms, box-shadow 400ms;
+
+  &.scrolled {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  ul {
     width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
 
-    ul {
-        width: 100vw;
-        display: flex;
-        justify-content: space-around;
-        list-style: none;
-        
-        li {
-            
-            a {
-                color: var(--main-clr);
-                text-decoration: none;
-                cursor: pointer;
+    li a {
+      color: var(--main-clr);
+      text-decoration: none;
+      cursor: pointer;
+      background: 
+        linear-gradient(to right, transparent, transparent),
+        linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 180, 1), rgba(0, 100, 200, 1));
+      background-size: 100% 0.1em, 0 0.1em;
+      background-position: 100% 100%, 0 100%;
+      background-repeat: no-repeat;
+      transition: background-size 400ms;
 
-                background: 
-          linear-gradient(to right, transparent, transparent),
-          linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 180, 1), rgba(0, 100, 200, 1));
-        background-size: 100% 0.1em, 0 0.1em;
-        background-position: 100% 100%, 0 100%;
-        background-repeat: no-repeat;
-        transition: background-size 400ms;
-        color: var(--main-clr);
-        text-decoration: none;
-
-        &:hover, &:focus {
-          background-size: 0 0.1em, 100% 0.1em;
-            }
-        }
+      &:hover, &:focus {
+        background-size: 0 0.1em, 100% 0.1em;
+      }
     }
-}
+  }
 }

@@ -1,8 +1,19 @@
 import './navbar.scss'
+import { useEffect, useState } from 'react';
 
 function Nav() {
-    return(
-        <div className="nav-container">
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 10);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    return (
+        <div className={`nav-container ${scrolled ? 'scrolled' : ''}`}>
             <div className="nav-links">
                 <ul>
                     <li>
@@ -10,9 +21,6 @@ function Nav() {
                     </li>
                     <li>
                         <a href='/resume'>Resume</a>
-                    </li>
-                    <li>
-                        <a href='/blog'>Blog</a>
                     </li>
                     <li>
                         <a href='/contact'>Contact Me</a>
