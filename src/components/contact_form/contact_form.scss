@@ -6,18 +6,29 @@ form {
     color: var(--main-clr);
     gap: 1rem;
 
-    input {
-        background: hsl(from var(--color-bg2) h s l / 0.5);
-        color: var(--main-clr);
-        border: none;
-    }
+input, textarea {
+  background: hsl(from var(--color-bg2) h s l / 0.25); // lighter, more transparent
+  color: var(--main-clr);
+  border: 1px solid rgba(255, 255, 255, 0.12); // soft white edge
+  border-radius: 6px;
+  padding: 8px 10px;
+  outline: none;
+  transition: border 300ms, background 300ms;
+  resize: none;
 
-    textarea {
-        background: hsl(from var(--color-bg2) h s l / 0.5);
-        color: var(--main-clr);
-        border: none;
-        resize: none;
-    }
+  &:focus {
+    border: 1px solid rgba(255, 255, 255, 0.35); // brightens on focus
+    background: hsl(from var(--color-bg2) h s l / 0.35);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+textarea {
+    height: 5em;
+}
 
     button {
           background: 
