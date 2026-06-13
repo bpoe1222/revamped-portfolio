@@ -1,28 +1,15 @@
-import './pagenotfound.scss'
+import './pagenotfound.scss';
 
 function Page() {
-    return(
-        <div>
-            <div className="gradient-bg">
-            <div className="gradients-container">
-                <div className='g1'></div>
-                <div className='g2'></div>
-                <div className='g3'></div>
-                <div className='g4'></div>
-                <div className='g5'></div>
-            </div>
-        </div>
-        <div className="pnf-container">
-                <div className='pnf-text-container'>
-                    <h1>Oops, that page doesn't exist yet!</h1>
-                    <p>
-                        <a href='/'>Return to safety</a>
-                    </p>
-                </div>  
-            </div>
-        </div>
-        
-    )
+  return (
+    <main className="pnf-container">
+      <section className="pnf-text-container" aria-labelledby="not-found-title">
+        <p className="eyebrow">404</p>
+        <h1 id="not-found-title">That page does not exist.</h1>
+        <a href="/">Return Home</a>
+      </section>
+    </main>
+  );
 }
 
-export default Page
+export default Page;

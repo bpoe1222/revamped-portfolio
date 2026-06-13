@@ -1,24 +1,81 @@
 .blog-container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  width: min(100%, 1320px);
+  min-height: calc(100vh - 96px);
+  margin: 0 auto;
+  border-inline: 1px solid var(--color-border);
+}
+
+.blog-intro {
+  padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 6vw, 5rem);
+  border-bottom: 1px solid var(--color-border);
+
+  h1 {
+    max-width: 12ch;
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(4rem, 10vw, 9rem);
+    font-weight: 430;
+    letter-spacing: 0;
+    line-height: 0.95;
+  }
+
+  p:not(.eyebrow) {
+    max-width: 520px;
+    margin: 1.5rem 0 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+}
+
+.blog-posts {
+  a {
+    display: grid;
     align-items: center;
-    padding: 2rem;
-    gap: 2rem;
-    color: var(--main-clr);
+    padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 4.5rem);
+    border-bottom: 1px solid var(--color-border);
+    gap: 1.5rem;
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    transition:
+      background-color 160ms ease,
+      color 160ms ease;
 
-    .blog-posts {
-        a {
-                    display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        // break-after: always;
-        gap: 1rem;
-        border-radius: 5px;
-        }
-
+    &:hover,
+    &:focus-visible {
+      background: var(--color-surface);
+      color: var(--color-accent);
     }
+  }
+
+  span,
+  time {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--color-text);
+    font-size: clamp(1.7rem, 3vw, 3rem);
+    font-weight: 430;
+    line-height: 1.1;
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    color: var(--color-text-muted);
+  }
+}
+
+@media (max-width: 760px) {
+  .blog-container {
+    border-inline: 0;
+  }
+
+  .blog-posts a {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

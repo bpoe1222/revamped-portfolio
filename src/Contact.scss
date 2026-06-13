@@ -1,30 +1,46 @@
-.contact-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    color: var(--color-text);
+.contact-page {
+  display: grid;
+  width: min(100%, 1320px);
+  min-height: calc(100vh - 96px);
+  margin: 0 auto;
+  border-inline: 1px solid var(--color-border);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.85fr);
 }
 
-    .card-container-contact {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      border-radius: 15px;
-      padding: 21px;
-      color: var(--main-clr);
+.contact-page__intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 6vw, 5rem);
 
-      position: relative;
-      background: hsl(from var(--main-clr) h s l / 0.15);
-      backdrop-filter: blur(1000px);
+  h1 {
+    max-width: 10ch;
+    margin: 0 0 1.5rem;
+    color: var(--color-text);
+    font-size: clamp(3.5rem, 9vw, 8.5rem);
+    font-weight: 430;
+    letter-spacing: 0;
+    line-height: 0.95;
+  }
 
-      &::before {
-        position: absolute;
-        content: "";
-        inset: 0;
-        z-index: -1;
-        border-radius: inherit;
-      }
-    }
+  p:not(.eyebrow) {
+    max-width: 540px;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    line-height: 1.65;
+  }
+}
+
+@media (max-width: 900px) {
+  .contact-page {
+    min-height: auto;
+    border-inline: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact-page__intro {
+    min-height: 440px;
+    border-bottom: 1px solid var(--color-border);
+  }
+}

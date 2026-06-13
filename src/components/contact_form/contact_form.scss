@@ -1,52 +1,241 @@
-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 300px;
-    color: var(--main-clr);
-    gap: 1rem;
-
-input, textarea {
-  background: hsl(from var(--color-bg2) h s l / 0.25); // lighter, more transparent
-  color: var(--main-clr);
-  border: 1px solid rgba(255, 255, 255, 0.12); // soft white edge
-  border-radius: 6px;
-  padding: 8px 10px;
-  outline: none;
-  transition: border 300ms, background 300ms;
-  resize: none;
-
-  &:focus {
-    border: 1px solid rgba(255, 255, 255, 0.35); // brightens on focus
-    background: hsl(from var(--color-bg2) h s l / 0.35);
-  }
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.3);
-  }
+.contact-form {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.25rem;
+  border-left: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: clamp(2rem, 5vw, 4.5rem);
 }
 
-textarea {
-    height: 5em;
-}
+.contact-form__field {
+  display: grid;
+  gap: 0.55rem;
 
-    button {
-          background: 
-    linear-gradient(to right, var(--color-bg2), var(--color-bg2)),
-    linear-gradient(to right, rgba(255, 0, 0, 1), rgba(255, 0, 180, 1), rgba(0, 100, 200, 1));
-  background-size: 100% 100%, 0 100%;
-  background-position: 100% 100%, 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 400ms;
-  color: var(--main-clr);
-  text-decoration: none;
-  cursor: pointer;
-  border: none;
-  width: 50%;
-  align-self: center;
-
-  &:hover, &:focus {
-    background-size: 0 100%, 100% 100%;
+  label {
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
+
+  input,
+  textarea {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid var(--color-border-strong);
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-text);
+    padding: 0.85rem 0;
+    outline: none;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease;
+
+    &:focus {
+      border-color: var(--color-accent);
     }
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+  }
+
+  textarea {
+    min-height: 9rem;
+    resize: vertical;
+  }
+}
+
+.contact-form button {
+  min-height: 3.6rem;
+  margin-top: 0.75rem;
+  border: 1px solid var(--color-text);
+  background: var(--color-text);
+  color: var(--color-bg);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    border-color: var(--color-border-strong);
+    background: var(--color-border);
+    color: var(--color-text-muted);
+    cursor: wait;
+    transform: none;
+  }
+}
+
+.contact-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 15, 15, 0.35);
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+:root[data-theme='dark'] .contact-modal-backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.contact-modal {
+  position: relative;
+  width: min(100%, 620px);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-soft);
+  color: var(--color-text);
+  padding: clamp(1.5rem, 4vw, 3rem);
+
+  h2 {
+    max-width: 12ch;
+    margin: 2rem 0 1rem;
+    color: var(--color-text);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 430;
+    letter-spacing: 0;
+    line-height: 0.95;
+  }
+
+  p {
+    max-width: 460px;
+    margin: 0;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+}
+
+.contact-modal__dismiss {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  min-height: 2.5rem;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 0 0.85rem;
+  text-transform: uppercase;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    background-color 160ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+}
+
+.contact-modal__status {
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contact-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 2.25rem;
+}
+
+.contact-modal__primary,
+.contact-modal__secondary {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-text);
+  padding: 0 1.1rem;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.contact-modal__primary {
+  background: var(--color-text);
+  color: var(--color-bg);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: #ffffff;
+    transform: translateY(-1px);
+  }
+}
+
+.contact-modal__secondary {
+  background: transparent;
+  color: var(--color-text);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+}
+
+@media (max-width: 820px) {
+  .contact-form {
+    border-top: 1px solid var(--color-border);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact-modal {
+    min-height: min(520px, calc(100vh - 2rem));
+    padding-top: 4.5rem;
+  }
+
+  .contact-modal__actions {
+    flex-direction: column;
+  }
+
+  .contact-modal__primary,
+  .contact-modal__secondary {
+    width: 100%;
+  }
 }
