@@ -1,7 +1,7 @@
 import { getPostsForDiscovery } from "@/lib/blog/queries";
 import { siteUrl } from "@/lib/blog/content";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 function xml(value: string) {
   return value.replace(

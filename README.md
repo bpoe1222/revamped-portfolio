@@ -114,6 +114,10 @@ The local blog hero is an optimized 109 KB WebP in `public/blog/` and is served 
 
 Do not run migrations automatically in every serverless invocation. Apply reviewed migrations as an explicit release step.
 
+`vercel.json` pins the deployment install and build commands to `npm ci` and `npm run build`, so Vercel installs exactly the committed lockfile. Turso clients are initialized lazily, and database-backed blog, feed, sitemap, and admin routes render at request time. As a result, `next build` does not need database or OAuth credentials, network access to Turso, or an already-migrated schema. Those values remain mandatory when the deployed routes execute.
+
+Keep `TURSO_DATABASE_URL`, `TURSO_AUTH_TOKEN`, `GITHUB_ID`, `GITHUB_SECRET`, `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, and the administrator allowlist in Vercel Environment Variables. The tracked `.env.production` contains only non-secret legacy build flags; never add credentials to it. Production runtime refuses to use a local `file:` database URL.
+
 ## Backup, restore, and credential rotation
 
 - Use Turso’s dashboard/CLI backup or point-in-time recovery facilities appropriate to the account plan before schema changes.

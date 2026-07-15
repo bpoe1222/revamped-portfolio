@@ -1,7 +1,13 @@
 import "server-only";
 
 import { and, eq, ne } from "drizzle-orm";
-import { blogPosts, blogPostTags, categories, db, tags } from "@/lib/db/server";
+import {
+  blogPosts,
+  blogPostTags,
+  categories,
+  getDatabase,
+  tags,
+} from "@/lib/db/server";
 import { parseTags, slugify, type PostInput } from "./validation";
 
 function isUniqueConstraintError(error: unknown): boolean {
@@ -26,6 +32,7 @@ export async function savePost(
   postId?: string,
 ) {
   try {
+    const db = getDatabase();
     return await db.transaction(async (transaction) => {
       const existing = postId
         ? await transaction
@@ -154,6 +161,7 @@ export async function savePost(
 }
 
 export async function setPostStatus(id: string, status: "draft" | "published") {
+  const db = getDatabase();
   const post = await db
     .select({ id: blogPosts.id, publishedAt: blogPosts.publishedAt })
     .from(blogPosts)
@@ -175,11 +183,13 @@ export async function setPostStatus(id: string, status: "draft" | "published") {
 }
 
 export async function deletePost(id: string) {
+  const db = getDatabase();
   const result = await db.delete(blogPosts).where(eq(blogPosts.id, id));
   return result.rowsAffected > 0;
 }
 
 export async function slugIsAvailable(slug: string, excludingId?: string) {
+  const db = getDatabase();
   const conditions = [eq(blogPosts.slug, slug)];
   if (excludingId) conditions.push(ne(blogPosts.id, excludingId));
   const existing = await db

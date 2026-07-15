@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PostCard } from "@/components/blog/post-card";
 import { getArchivePosts, getCategories, getTags } from "@/lib/blog/queries";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: { absolute: "Archive — The Honest Build" },
   description: "Every published field note from The Honest Build.",

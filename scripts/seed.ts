@@ -13,7 +13,8 @@ import {
 async function main() {
   if (!process.env.TURSO_DATABASE_URL)
     await mkdir(".data", { recursive: true });
-  const { db } = await import("../lib/db/connection");
+  const { getDatabase } = await import("../lib/db/connection");
+  const db = getDatabase();
   await migrate(db, { migrationsFolder: "./drizzle" });
 
   const authorEmail =

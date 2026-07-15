@@ -1,4 +1,4 @@
 import "server-only";
 
-export { db } from "./connection";
+export { getDatabase } from "./connection";
 export * from "./schema";

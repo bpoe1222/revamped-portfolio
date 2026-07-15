@@ -4,7 +4,7 @@ import Link from "next/link";
 import { PostCard } from "@/components/blog/post-card";
 import { getCategories, getPublishedPosts } from "@/lib/blog/queries";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: { absolute: "The Honest Build" },

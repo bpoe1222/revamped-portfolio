@@ -9,7 +9,7 @@ import {
 } from "@/lib/blog/content";
 import { getPublishedPostBySlug } from "@/lib/blog/queries";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata({

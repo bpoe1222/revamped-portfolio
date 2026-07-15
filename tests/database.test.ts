@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 import { beforeAll, describe, expect, it } from "vitest";
 import { migrate } from "drizzle-orm/libsql/migrator";
 import { eq } from "drizzle-orm";
-import { db } from "@/lib/db/connection";
+import { getDatabase } from "@/lib/db/connection";
 import { adminIdentities, blogPosts, categories } from "@/lib/db/schema";
 import { deletePost, savePost, setPostStatus } from "@/lib/blog/mutations";
 import {
@@ -13,6 +13,7 @@ import {
 
 const authorId = "20000000-0000-4000-8000-000000000001";
 const categoryId = "20000000-0000-4000-8000-000000000002";
+const db = getDatabase();
 
 beforeAll(async () => {
   await migrate(db, { migrationsFolder: "./drizzle" });

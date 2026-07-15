@@ -4,7 +4,7 @@ import { and, eq } from "drizzle-orm";
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { forbidden, redirect, unauthorized } from "next/navigation";
-import { db, adminIdentities } from "@/lib/db/server";
+import { adminIdentities, getDatabase } from "@/lib/db/server";
 import { isIdentityAllowlisted } from "@/lib/auth-policy";
 import {
   inspectAuthConfiguration,
@@ -58,6 +58,7 @@ export function getAuthOptions(): NextAuthOptions {
         )
           return false;
 
+        const db = getDatabase();
         const existing = await db
           .select({ id: adminIdentities.id })
           .from(adminIdentities)
@@ -114,6 +115,7 @@ export function getAuthOptions(): NextAuthOptions {
         if (typeof providerAccountId !== "string" || !session.user)
           return session;
 
+        const db = getDatabase();
         const identity = await db
           .select({ id: adminIdentities.id, role: adminIdentities.role })
           .from(adminIdentities)
@@ -153,6 +155,7 @@ export async function getAuthorizedAdmin() {
   const session = await getServerSession(getAuthOptions());
   if (!session?.user?.adminId || session.user.role !== "admin") return null;
 
+  const db = getDatabase();
   const identity = await db
     .select()
     .from(adminIdentities)
@@ -169,6 +172,7 @@ export async function requireAdminPage() {
   const session = await getServerSession(getAuthOptions());
   if (!session?.user) redirect("/admin/login");
   if (!session.user.adminId || session.user.role !== "admin") forbidden();
+  const db = getDatabase();
   const identity = await db
     .select()
     .from(adminIdentities)

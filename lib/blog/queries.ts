@@ -17,7 +17,7 @@ import {
   blogPosts,
   blogPostTags,
   categories,
-  db,
+  getDatabase,
   tags,
 } from "@/lib/db/server";
 
@@ -46,6 +46,7 @@ const summarySelection = {
 };
 
 export async function getPublishedPosts(limit = 6) {
+  const db = getDatabase();
   return db
     .select(summarySelection)
     .from(blogPosts)
@@ -56,10 +57,12 @@ export async function getPublishedPosts(limit = 6) {
 }
 
 export async function getCategories() {
+  const db = getDatabase();
   return db.select().from(categories).orderBy(asc(categories.name));
 }
 
 export async function getTags() {
+  const db = getDatabase();
   return db.select().from(tags).orderBy(asc(tags.name));
 }
 
@@ -72,6 +75,7 @@ export type ArchiveFilters = {
 };
 
 export async function getArchivePosts(filters: ArchiveFilters = {}) {
+  const db = getDatabase();
   const page = Math.max(1, filters.page ?? 1);
   const pageSize = Math.min(24, Math.max(1, filters.pageSize ?? 9));
   const conditions: (SQL | undefined)[] = [publicPostCondition()];
@@ -125,6 +129,7 @@ export async function getArchivePosts(filters: ArchiveFilters = {}) {
 }
 
 export async function getPublishedPostBySlug(slug: string) {
+  const db = getDatabase();
   const rows = await db
     .select({
       ...summarySelection,
@@ -181,6 +186,7 @@ export async function getAdminPosts(filters: {
   category?: string;
   sort?: string;
 }) {
+  const db = getDatabase();
   const conditions: (SQL | undefined)[] = [];
   if (filters.search?.trim()) {
     conditions.push(
@@ -222,6 +228,7 @@ export async function getAdminPosts(filters: {
 }
 
 export async function getAdminPost(id: string) {
+  const db = getDatabase();
   const rows = await db
     .select()
     .from(blogPosts)
@@ -237,6 +244,7 @@ export async function getAdminPost(id: string) {
 }
 
 export async function getPostsForDiscovery() {
+  const db = getDatabase();
   return db
     .select({
       slug: blogPosts.slug,
@@ -254,6 +262,7 @@ export async function getPostsForDiscovery() {
 
 export async function getTagNamesForPosts(postIds: string[]) {
   if (!postIds.length) return new Map<string, string[]>();
+  const db = getDatabase();
   const rows = await db
     .select({ postId: blogPostTags.postId, name: tags.name })
     .from(blogPostTags)
