@@ -1,5 +1,4 @@
 import { ContactUs } from './components/contact_form/contact_form';
-import './App.scss';
 
 const navModules = [
   {

@@ -1,0 +1,25 @@
+@use "../src/index.scss";
+@use "../src/App.scss";
+@use "../src/Resume.scss";
+@use "../src/Contact.scss";
+@use "../src/components/contact_form/contact_form.scss";
+@use "../src/components/navbar/navbar.scss";
+@use "./blog.scss";
+@use "./admin.scss";
+
+.not-found {
+  min-height: calc(100vh - 96px);
+  padding: clamp(4rem, 12vw, 10rem);
+
+  h1 {
+    max-width: 14ch;
+    font-size: clamp(3rem, 8vw, 8rem);
+    font-weight: 450;
+    line-height: 0.95;
+  }
+
+  a {
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+}

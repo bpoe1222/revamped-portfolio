@@ -1,6 +1,7 @@
+'use client';
+
 import React, { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import './contact_form.scss';
 
 const mailtoHref =
   'mailto:Contact@baileypoe.dev?subject=Portfolio%20Contact&body=Hi%20Bailey%2C%0A%0A';
