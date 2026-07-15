@@ -8,6 +8,8 @@ import { deletePost, savePost, setPostStatus } from "@/lib/blog/mutations";
 import {
   getArchivePosts,
   getPostsForDiscovery,
+  getPublicCategories,
+  getPublicTags,
   getPublishedPostBySlug,
 } from "@/lib/blog/queries";
 
@@ -52,6 +54,12 @@ describe("Turso-compatible database workflow", () => {
     expect(result.ok).toBe(true);
     if (result.ok) postId = result.id;
     expect(await getPublishedPostBySlug(draftInput.slug)).toBeNull();
+    expect(
+      (await getPublicCategories()).map((item) => item.slug),
+    ).not.toContain("growth");
+    expect((await getPublicTags()).map((item) => item.slug)).not.toContain(
+      "testing",
+    );
   });
 
   it("edits the draft and rejects a duplicate slug", async () => {
@@ -74,8 +82,17 @@ describe("Turso-compatible database workflow", () => {
     expect((await getPublishedPostBySlug(draftInput.slug))?.title).toMatch(
       /Edited/,
     );
+    expect((await getPublicCategories()).map((item) => item.slug)).toContain(
+      "growth",
+    );
+    expect((await getPublicTags()).map((item) => item.slug)).toContain(
+      "testing",
+    );
     expect(await setPostStatus(postId, "draft")).toBe(true);
     expect(await getPublishedPostBySlug(draftInput.slug)).toBeNull();
+    expect((await getPublicTags()).map((item) => item.slug)).not.toContain(
+      "testing",
+    );
   });
 
   it("makes elapsed scheduled posts public but excludes future schedules", async () => {
@@ -103,6 +120,40 @@ describe("Turso-compatible database workflow", () => {
     });
     expect(await getPublishedPostBySlug("elapsed-schedule")).not.toBeNull();
     expect(await getPublishedPostBySlug("future-schedule")).toBeNull();
+  });
+
+  it("links each article to its actual adjacent public posts", async () => {
+    const now = Date.now();
+    await db.insert(blogPosts).values([
+      {
+        id: randomUUID(),
+        title: "Older published post",
+        slug: "older-published-post",
+        excerpt: "An older post used to verify previous links.",
+        content: "Published content that is long enough for this test.",
+        status: "published",
+        authorId,
+        categoryId,
+        publishedAt: new Date(now - 3 * 86_400_000),
+      },
+      {
+        id: randomUUID(),
+        title: "Middle published post",
+        slug: "middle-published-post",
+        excerpt: "A middle post used to verify both adjacent links.",
+        content: "Published content that is long enough for this test.",
+        status: "published",
+        authorId,
+        categoryId,
+        publishedAt: new Date(now - 2 * 86_400_000),
+      },
+    ]);
+
+    const middle = await getPublishedPostBySlug("middle-published-post");
+    expect(middle?.previous?.slug).toBe("older-published-post");
+    expect(middle?.next?.slug).toBe("elapsed-schedule");
+    expect(middle?.previous?.slug).not.toBe(middle?.slug);
+    expect(middle?.next?.slug).not.toBe(middle?.slug);
   });
 
   it("supports archive content search and excludes drafts from discovery feeds", async () => {

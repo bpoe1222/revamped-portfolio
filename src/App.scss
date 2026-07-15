@@ -170,12 +170,20 @@
   font-weight: 600;
 
   span,
-  p {
+  p,
+  h2 {
     margin: 0;
   }
 
-  p {
+  p,
+  h2 {
     margin-top: 0.75rem;
+  }
+
+  h2 {
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
   }
 }
 

@@ -8,6 +8,7 @@ import {
   inArray,
   like,
   lte,
+  ne,
   or,
   sql,
   type SQL,
@@ -64,6 +65,42 @@ export async function getCategories() {
 export async function getTags() {
   const db = getDatabase();
   return db.select().from(tags).orderBy(asc(tags.name));
+}
+
+export async function getPublicCategories() {
+  const db = getDatabase();
+  return db
+    .select({
+      id: categories.id,
+      name: categories.name,
+      slug: categories.slug,
+      description: categories.description,
+      createdAt: categories.createdAt,
+      updatedAt: categories.updatedAt,
+    })
+    .from(categories)
+    .innerJoin(blogPosts, eq(blogPosts.categoryId, categories.id))
+    .where(publicPostCondition())
+    .groupBy(categories.id)
+    .orderBy(asc(categories.name));
+}
+
+export async function getPublicTags() {
+  const db = getDatabase();
+  return db
+    .select({
+      id: tags.id,
+      name: tags.name,
+      slug: tags.slug,
+      createdAt: tags.createdAt,
+      updatedAt: tags.updatedAt,
+    })
+    .from(tags)
+    .innerJoin(blogPostTags, eq(blogPostTags.tagId, tags.id))
+    .innerJoin(blogPosts, eq(blogPosts.id, blogPostTags.postId))
+    .where(publicPostCondition())
+    .groupBy(tags.id)
+    .orderBy(asc(tags.name));
 }
 
 export type ArchiveFilters = {
@@ -155,11 +192,16 @@ export async function getPublishedPostBySlug(slug: string) {
     .orderBy(asc(tags.name));
 
   const effectiveDate = post.publishedAt ?? post.scheduledFor ?? post.updatedAt;
+  const effectiveEpochSeconds = Math.floor(effectiveDate.getTime() / 1000);
   const [previous] = await db
     .select({ title: blogPosts.title, slug: blogPosts.slug })
     .from(blogPosts)
     .where(
-      and(publicPostCondition(), sql`${publicationDate} < ${effectiveDate}`),
+      and(
+        publicPostCondition(),
+        ne(blogPosts.id, post.id),
+        sql`${publicationDate} < ${effectiveEpochSeconds}`,
+      ),
     )
     .orderBy(desc(publicationDate))
     .limit(1);
@@ -167,7 +209,11 @@ export async function getPublishedPostBySlug(slug: string) {
     .select({ title: blogPosts.title, slug: blogPosts.slug })
     .from(blogPosts)
     .where(
-      and(publicPostCondition(), sql`${publicationDate} > ${effectiveDate}`),
+      and(
+        publicPostCondition(),
+        ne(blogPosts.id, post.id),
+        sql`${publicationDate} > ${effectiveEpochSeconds}`,
+      ),
     )
     .orderBy(asc(publicationDate))
     .limit(1);
@@ -250,7 +296,6 @@ export async function getPostsForDiscovery() {
       slug: blogPosts.slug,
       title: blogPosts.title,
       excerpt: blogPosts.excerpt,
-      content: blogPosts.content,
       publishedAt: blogPosts.publishedAt,
       scheduledFor: blogPosts.scheduledFor,
       updatedAt: blogPosts.updatedAt,

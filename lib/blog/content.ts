@@ -1,3 +1,5 @@
+import { SITE_ORIGIN } from "@/lib/seo";
+
 export function estimatedReadingMinutes(markdown: string) {
   const plainText = markdown
     .replace(/```[\s\S]*?```/g, " ")
@@ -17,7 +19,8 @@ export function formatDate(date: Date | null, timeZone = "America/Chicago") {
   }).format(date);
 }
 
+export const canonicalSiteOrigin = SITE_ORIGIN;
+
 export function siteUrl(path = "") {
-  const base = process.env.SITE_URL ?? "https://baileypoe.dev";
-  return new URL(path, base).toString();
+  return new URL(path, canonicalSiteOrigin).toString();
 }

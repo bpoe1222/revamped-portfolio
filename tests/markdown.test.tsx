@@ -21,6 +21,18 @@ describe("Markdown rendering", () => {
     ).toBeInTheDocument();
   });
 
+  it("keeps authored level-one headings below the page title", () => {
+    render(<Markdown content={"# Authored title\n\n## Section heading"} />);
+
+    expect(screen.queryByRole("heading", { level: 1 })).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Authored title" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Section heading" }),
+    ).toBeInTheDocument();
+  });
+
   it("does not render untrusted raw HTML or script nodes", () => {
     const { container } = render(
       <Markdown

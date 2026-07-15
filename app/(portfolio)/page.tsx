@@ -1,10 +1,21 @@
-import type { Metadata } from "next";
+import { portfolioHomeMetadata, portfolioStructuredData } from "@/lib/seo";
 import LegacyPortfolio from "@/src/App";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
+export const metadata = portfolioHomeMetadata;
 
 export default function HomePage() {
-  return <LegacyPortfolio />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(portfolioStructuredData).replace(
+            /</g,
+            "\\u003c",
+          ),
+        }}
+      />
+      <LegacyPortfolio />
+    </>
+  );
 }

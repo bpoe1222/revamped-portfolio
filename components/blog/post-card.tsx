@@ -10,9 +10,12 @@ type PostCardProps = {
     scheduledFor: Date | null;
   };
   index?: number;
+  headingLevel?: "h2" | "h3";
 };
 
-export function PostCard({ post, index }: PostCardProps) {
+export function PostCard({ post, index, headingLevel = "h2" }: PostCardProps) {
+  const Heading = headingLevel;
+
   return (
     <article className="journal-card">
       <div className="journal-card__meta">
@@ -24,9 +27,9 @@ export function PostCard({ post, index }: PostCardProps) {
           {formatDate(post.publishedAt ?? post.scheduledFor)}
         </time>
       </div>
-      <h2>
+      <Heading>
         <a href={`/blog/${post.slug}`}>{post.title}</a>
-      </h2>
+      </Heading>
       <p>{post.excerpt}</p>
       <a className="journal-card__link" href={`/blog/${post.slug}`}>
         Read the piece <span aria-hidden="true">→</span>

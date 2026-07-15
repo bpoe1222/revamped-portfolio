@@ -24,25 +24,32 @@ export async function generateMetadata({
 
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt;
+  const publishedDate = post.publishedAt ?? post.scheduledFor ?? post.updatedAt;
+  const modifiedDate =
+    post.updatedAt > publishedDate ? post.updatedAt : publishedDate;
   const images = post.featuredImageUrl
-    ? [{ url: post.featuredImageUrl, alt: post.featuredImageAlt ?? post.title }]
+    ? [{ url: post.featuredImageUrl, alt: post.featuredImageAlt || post.title }]
     : [
         {
           url: "/blog/honest-build-workbench.webp",
-          alt: "The Honest Build workbench",
+          width: 1536,
+          height: 1024,
+          alt: "A green notebook on a workshop table",
         },
       ];
   return {
-    title,
+    title: post.seoTitle ? { absolute: title } : title,
     description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       type: "article",
+      locale: "en_US",
+      siteName: "The Honest Build",
       url: `/blog/${post.slug}`,
       title,
       description,
-      publishedTime: (post.publishedAt ?? post.scheduledFor)?.toISOString(),
-      modifiedTime: post.updatedAt.toISOString(),
+      publishedTime: publishedDate.toISOString(),
+      modifiedTime: modifiedDate.toISOString(),
       authors: ["Bailey Poe"],
       tags: post.tags.map((tag) => tag.name),
       images,
@@ -51,7 +58,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: images.map((image) => image.url),
+      images: images.map((image) => ({ url: image.url, alt: image.alt })),
     },
   };
 }
@@ -62,20 +69,34 @@ export default async function ArticlePage({ params }: { params: Params }) {
   if (!post) notFound();
 
   const publishedDate = post.publishedAt ?? post.scheduledFor ?? post.updatedAt;
+  const modifiedDate =
+    post.updatedAt > publishedDate ? post.updatedAt : publishedDate;
+  const articleUrl = siteUrl(`/blog/${post.slug}`);
+  const imageUrl = post.featuredImageUrl
+    ? post.featuredImageUrl
+    : siteUrl("/blog/honest-build-workbench.webp");
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": `${articleUrl}#article`,
+    url: articleUrl,
     headline: post.title,
     description: post.seoDescription || post.excerpt,
     datePublished: publishedDate.toISOString(),
-    dateModified: post.updatedAt.toISOString(),
-    mainEntityOfPage: siteUrl(`/blog/${post.slug}`),
+    dateModified: modifiedDate.toISOString(),
+    inLanguage: "en-US",
+    mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
+    isPartOf: {
+      "@type": "Blog",
+      name: "The Honest Build",
+      url: siteUrl("/blog"),
+    },
     author: { "@type": "Person", name: "Bailey Poe", url: siteUrl("/") },
-    publisher: { "@type": "Person", name: "Bailey Poe" },
-    image: post.featuredImageUrl
-      ? [post.featuredImageUrl]
-      : [siteUrl("/blog/honest-build-workbench.webp")],
-    keywords: post.tags.map((tag) => tag.name).join(", "),
+    publisher: { "@type": "Person", name: "Bailey Poe", url: siteUrl("/") },
+    image: [imageUrl],
+    ...(post.tags.length
+      ? { keywords: post.tags.map((tag) => tag.name).join(", ") }
+      : {}),
   };
 
   return (
@@ -109,7 +130,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
         <figure className="article-image">
           {/* External author-provided URLs intentionally use a native image until Blob is configured. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={post.featuredImageUrl} alt={post.featuredImageAlt ?? ""} />
+          <img
+            src={post.featuredImageUrl}
+            alt={post.featuredImageAlt || post.title}
+          />
         </figure>
       )}
 

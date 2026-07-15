@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { PostCard } from "@/components/blog/post-card";
-import { getCategories, getPublishedPosts } from "@/lib/blog/queries";
+import { getPublicCategories, getPublishedPosts } from "@/lib/blog/queries";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +19,23 @@ export const metadata: Metadata = {
     description:
       "Faith, family, work, and becoming better one honest step at a time.",
     type: "website",
+    locale: "en_US",
+    siteName: "The Honest Build",
     url: "/blog",
+    images: [
+      {
+        url: "/blog/honest-build-workbench.webp",
+        width: 1536,
+        height: 1024,
+        alt: "A green notebook on a workshop table",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Honest Build",
+    description:
+      "Faith, family, work, and becoming better one honest step at a time.",
     images: [
       {
         url: "/blog/honest-build-workbench.webp",
@@ -27,13 +43,12 @@ export const metadata: Metadata = {
       },
     ],
   },
-  twitter: { card: "summary_large_image" },
 };
 
 export default async function BlogPage() {
   const [posts, categories] = await Promise.all([
     getPublishedPosts(7),
-    getCategories(),
+    getPublicCategories(),
   ]);
   const [featured, ...recent] = posts;
 
@@ -101,7 +116,12 @@ export default async function BlogPage() {
         {recent.length ? (
           <div className="journal-grid">
             {recent.map((post, index) => (
-              <PostCard post={post} index={index} key={post.id} />
+              <PostCard
+                post={post}
+                index={index}
+                headingLevel="h3"
+                key={post.id}
+              />
             ))}
           </div>
         ) : (

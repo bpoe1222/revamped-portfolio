@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
 import { ContactUs } from "@/src/components/contact_form/contact_form";
+import { portfolioContactMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  alternates: { canonical: "/contact" },
-};
+export const metadata = portfolioContactMetadata;
 
 export default function ContactPage() {
   return (

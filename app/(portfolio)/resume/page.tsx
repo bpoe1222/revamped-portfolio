@@ -1,9 +1,6 @@
-import type { Metadata } from "next";
+import { portfolioResumeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Resume",
-  alternates: { canonical: "/resume" },
-};
+export const metadata = portfolioResumeMetadata;
 
 const highlights = [
   ["Role", "Quality Program Manager"],

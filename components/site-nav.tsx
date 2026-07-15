@@ -42,7 +42,7 @@ export function SiteNav() {
         <Link href="/#work">Work</Link>
         <Link href="/#experience">Experience</Link>
         <Link href="/blog">Blog</Link>
-        <Link href="/#contact">Contact</Link>
+        <Link href="/contact">Contact</Link>
       </nav>
       <div className="nav-actions">
         <a className="resume-link" href="/resume">

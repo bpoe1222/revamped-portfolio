@@ -24,7 +24,6 @@ Copy `.env.example` to the ignored `.env.local` and set values locally. Never co
 | `TURSO_DATABASE_URL` | Turso libSQL database URL provisioned by the Vercel Marketplace integration                   |
 | `TURSO_AUTH_TOKEN`   | Private Turso database token                                                                  |
 | `NEXTAUTH_URL`       | Application origin; `http://localhost:3000` locally and `https://baileypoe.dev` in production |
-| `SITE_URL`           | Canonical public site origin, normally `https://baileypoe.dev`                                |
 | `NEXTAUTH_SECRET`    | Strong random Auth.js signing secret                                                          |
 | `GITHUB_ID`          | GitHub OAuth application client ID                                                            |
 | `GITHUB_SECRET`      | GitHub OAuth application client secret                                                        |

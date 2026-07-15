@@ -138,7 +138,7 @@ function App() {
       <section className="section-block section-block--work" id="work">
         <div className="section-block__meta">
           <span>02</span>
-          <p>Featured Work</p>
+          <h2>Featured Work</h2>
         </div>
         <div className="work-list">
           {featuredWork.map((project) => (
@@ -159,7 +159,7 @@ function App() {
       <section className="split-section" id="experience">
         <div className="section-block__meta">
           <span>03</span>
-          <p>Experience</p>
+          <h2>Experience</h2>
         </div>
         <div className="timeline">
           {experienceRows.map((row) => (

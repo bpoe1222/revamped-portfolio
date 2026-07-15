@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 import type { EditorState } from "@/app/(admin)/admin/blog/actions";
+import { articleMarkdownComponents } from "@/components/blog/markdown";
 
 type Category = { id: string; name: string };
 type EditorPost = {
@@ -173,6 +174,7 @@ export function PostEditor({
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeSanitize]}
+                  components={articleMarkdownComponents}
                 >
                   {content || "*Your preview will appear here.*"}
                 </ReactMarkdown>
