@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function initialTheme() {
   if (typeof window === "undefined") return "light";
@@ -13,6 +14,7 @@ function initialTheme() {
 }
 
 export function SiteNav() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [theme, setTheme] = useState(initialTheme);
 
@@ -30,6 +32,10 @@ export function SiteNav() {
   }, [theme]);
 
   const nextTheme = theme === "dark" ? "light" : "dark";
+  const isCurrentRoute = (href: string) => {
+    if (href === "/#about") return pathname === "/";
+    return !href.includes("#") && pathname === href;
+  };
 
   return (
     <header className={`nav-container ${scrolled ? "scrolled" : ""}`}>
@@ -38,14 +44,28 @@ export function SiteNav() {
       </Link>
       <p className="nav-descriptor">Quality Program Manager</p>
       <nav className="nav-links" aria-label="Primary navigation">
-        <Link href="/#about">About</Link>
-        <Link href="/#work">Work</Link>
-        <Link href="/#experience">Experience</Link>
-        <Link href="/blog">Blog</Link>
-        <Link href="/contact">Contact</Link>
+        {[
+          ["About", "/#about"],
+          ["Work", "/#work"],
+          ["Experience", "/#experience"],
+          ["Blog", "/blog"],
+          ["Contact", "/contact"],
+        ].map(([label, href]) => (
+          <Link
+            href={href}
+            aria-current={isCurrentRoute(href) ? "page" : undefined}
+            key={href}
+          >
+            {label}
+          </Link>
+        ))}
       </nav>
       <div className="nav-actions">
-        <a className="resume-link" href="/resume">
+        <a
+          className="resume-link"
+          href="/resume"
+          aria-current={pathname === "/resume" ? "page" : undefined}
+        >
           Resume <span aria-hidden="true">→</span>
         </a>
         <button

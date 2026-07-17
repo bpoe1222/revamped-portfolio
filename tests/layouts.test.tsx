@@ -39,6 +39,10 @@ describe("site layout boundaries", () => {
     );
     expect(html).toContain('aria-label="Primary navigation"');
     expect(html).toContain('aria-label="Bailey Poe home"');
+    expect(html).toContain('data-site-layout="portfolio"');
+    expect(html).toContain('class="portfolio-app-frame"');
+    expect(html).toContain('class="aqua-window-titlebar"');
+    expect(html).toContain("BaileyPoe.dev");
     expect(html).toContain("Quality Program Manager");
     expect(html).toContain("theme-toggle");
     expect(html).not.toContain('aria-label="The Honest Build navigation"');
@@ -56,6 +60,9 @@ describe("site layout boundaries", () => {
     expect(html).toContain('href="/blog/archive"');
     expect(html).toContain('href="/blog/rss.xml"');
     expect(html).not.toContain('aria-label="Primary navigation"');
+    expect(html).not.toContain('data-site-layout="portfolio"');
+    expect(html).not.toContain('class="portfolio-app-frame"');
+    expect(html).not.toContain('class="aqua-window-titlebar"');
     expect(html).not.toContain('aria-label="Bailey Poe home"');
     expect(html).not.toContain('class="nav-container');
     expect(html).not.toContain("Quality Program Manager");
@@ -71,6 +78,9 @@ describe("site layout boundaries", () => {
     expect(html).toContain('data-site-layout="admin"');
     expect(html).toContain('aria-label="Administration navigation"');
     expect(html).not.toContain('aria-label="Primary navigation"');
+    expect(html).not.toContain('data-site-layout="portfolio"');
+    expect(html).not.toContain('class="portfolio-app-frame"');
+    expect(html).not.toContain('class="aqua-window-titlebar"');
     expect(html).not.toContain('aria-label="The Honest Build navigation"');
     expect(html).not.toContain('class="nav-container');
     expect(html).not.toContain("journal-header");
