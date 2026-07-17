@@ -31,10 +31,10 @@ export async function generateMetadata({
     ? [{ url: post.featuredImageUrl, alt: post.featuredImageAlt || post.title }]
     : [
         {
-          url: "/blog/honest-build-workbench.webp",
-          width: 1536,
-          height: 1024,
-          alt: "A green notebook on a workshop table",
+          url: "/blog/thb-logo.png",
+          width: 1254,
+          height: 1254,
+          alt: "The Honest Build logo",
         },
       ];
   return {
@@ -74,7 +74,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
   const articleUrl = siteUrl(`/blog/${post.slug}`);
   const imageUrl = post.featuredImageUrl
     ? post.featuredImageUrl
-    : siteUrl("/blog/honest-build-workbench.webp");
+    : siteUrl("/blog/thb-logo.png");
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",

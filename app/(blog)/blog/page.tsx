@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     url: "/blog",
     images: [
       {
-        url: "/blog/honest-build-workbench.webp",
-        width: 1536,
-        height: 1024,
-        alt: "A green notebook on a workshop table",
+        url: "/blog/thb-logo.png",
+        width: 1254,
+        height: 1254,
+        alt: "The Honest Build logo",
       },
     ],
   },
@@ -38,8 +38,8 @@ export const metadata: Metadata = {
       "Faith, family, work, and becoming better one honest step at a time.",
     images: [
       {
-        url: "/blog/honest-build-workbench.webp",
-        alt: "A green notebook on a workshop table",
+        url: "/blog/thb-logo.png",
+        alt: "The Honest Build logo",
       },
     ],
   },

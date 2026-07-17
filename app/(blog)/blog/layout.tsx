@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { BlogHeader } from "@/components/blog/blog-header";
+import { blogIcons } from "@/lib/blog/branding";
 import Link from "next/link";
 
 export const metadata: Metadata = {
   title: { default: "The Honest Build", template: "%s | The Honest Build" },
   description:
     "Faith, family, work, and becoming better one honest step at a time.",
+  icons: blogIcons,
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -16,10 +18,10 @@ export const metadata: Metadata = {
     url: "/blog",
     images: [
       {
-        url: "/blog/honest-build-workbench.webp",
-        width: 1536,
-        height: 1024,
-        alt: "A green notebook on a workshop table",
+        url: "/blog/thb-logo.png",
+        width: 1254,
+        height: 1254,
+        alt: "The Honest Build logo",
       },
     ],
   },
@@ -30,8 +32,8 @@ export const metadata: Metadata = {
       "Faith, family, work, and becoming better one honest step at a time.",
     images: [
       {
-        url: "/blog/honest-build-workbench.webp",
-        alt: "A green notebook on a workshop table",
+        url: "/blog/thb-logo.png",
+        alt: "The Honest Build logo",
       },
     ],
   },
